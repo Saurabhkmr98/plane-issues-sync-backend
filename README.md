@@ -119,7 +119,7 @@ When a webhook is triggered, your server will listen to the issue closed event t
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Saurabhkmr98/issue-sync-backend.git
+git clone https://github.com/Saurabhkmr98/plane-issues-sync-backend.git
 cd issue-sync-backend
 ```
 
