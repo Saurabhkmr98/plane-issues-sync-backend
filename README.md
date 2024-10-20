@@ -120,7 +120,7 @@ When a webhook is triggered, your server will listen to the issue closed event t
 
 ```bash
 git clone https://github.com/Saurabhkmr98/plane-issues-sync-backend.git
-cd issue-sync-backend
+cd plane-issues-sync-backend
 ```
 
 ### 2. Install Dependencies
