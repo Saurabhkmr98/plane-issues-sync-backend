@@ -1,3 +1,4 @@
+const { PLANE_PROJECT_ID, PLANE_WORKSPACE_SLUG } = require('../../config');
 const { logger } = require('../../utils/logger');
 
 // socket.js
@@ -27,7 +28,7 @@ const initializeSocket = (server) => {
 const broadcastSyncProgress = (jobId, progress, message) => {
     logger.debug(`Broadcasting sync progress`, jobId, progress, message)
     if (io) {
-        io.emit('syncProgress', { jobId, progress, message });
+        io.emit(`syncProgress_${PLANE_WORKSPACE_SLUG}_${PLANE_PROJECT_ID}`, { jobId, progress, message });
     }
 };
 
