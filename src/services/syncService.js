@@ -87,6 +87,7 @@ class IssueSyncService {
 
     async startSync(jobId) {
         try {
+            await sleepFor(2000)
             // update the status of job
             await this.updateSyncJobProgress({ jobId, progress: 0, status: STATUS_INPROGRESS })
             // broadcast message
@@ -106,7 +107,7 @@ class IssueSyncService {
             let newIssues = []
 
             for (let i = 0; i < issues.length; i++) {
-                await sleepFor(10000);
+                await sleepFor(5000);
                 const issue = issues[i];
                 const { title, number, id: githubIssueId } = issue
 
