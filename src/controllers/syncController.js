@@ -22,7 +22,7 @@ class SyncController {
             const jobId = new Date().getTime().toString()
             await addSyncJobToQueue(jobId)
             const syncjob = await syncService.createSyncJob(jobId)
-            res.status(200).send({ message: "Sync started and queued", body: syncjob });
+            res.status(200).send({ message: "Sync started and queued", jobId: syncjob?._id });
         } catch (error) {
             next(error)
         }

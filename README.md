@@ -94,7 +94,7 @@ Real-time updates on the sync progress will be sent through the `syncProgress_${
 
 ## Webhook Setup
 
-You can set up GitHub webhooks to automatically trigger the issue synchronization whenever an issue is created or updated in a GitHub repository. This helps keep Plane and GitHub in sync without requiring manual API requests.
+You can set up GitHub webhooks to automatically trigger the issue synchronization, whenever an issue is closed in a GitHub repository it marks it as done in Plane project.
 
 ### 1. Create Webhook in GitHub
 
@@ -132,13 +132,13 @@ npm install
 
 ### 3. Environment Variables
 
-Create a `.env` file in the root directory and configure the variables by referencing to .env.example file:
+Create a `.env` file in the root directory and configure the variables by referencing to `.env.example` file:
 
-- **MONGO_URI**: MongoDB connection URI.
+- **MONGODB_URI**: MongoDB connection URI.
 - **REDIS_HOST** and **REDIS_PORT**: Redis server configuration for Bull queue.
-- **GITHUB_TOKEN**: GitHub API token for accessing GitHub issues.
+- **GITHUB_API_TOKEN**: GitHub API token for accessing GitHub issues.
 - **PLANE_API_TOKEN**: API token for interacting with the Plane platform.
-- **WEBHOOK_SECRET**: Secret key for verifying GitHub webhooks (optional).
+- **GITHUB_WEBHOOK_SECRET**: Secret key for verifying GitHub webhooks (optional).
 
 ### 4. Start Redis
 
@@ -182,9 +182,7 @@ Feel free to reach out for further details or to contribute to the project.
 
 ### Author
 
-[Your Name]  
-[Your Email]
+[Saurabh Kumar]  
+[saurabhkmr0241@gmail.com]
 
 ---
-
-With this README, your backend service will be well-documented and easy to set up. Let me know if you need any further adjustments!

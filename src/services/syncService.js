@@ -36,7 +36,7 @@ class IssueSyncService {
                 githubRepo: GITHUB_REPOSITORY,
                 planeWorkspace: PLANE_WORKSPACE_SLUG,
             });
-            return { status: syncJob.status, progress: syncJob.progress };
+            return { jobId, status: syncJob.status, progress: syncJob.progress };
         } catch (e) {
             logger.error("error while isJobAlreadyInProgress", { err: e?.message })
             throw e
