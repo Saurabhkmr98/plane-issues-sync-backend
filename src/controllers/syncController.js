@@ -1,18 +1,28 @@
-const syncService = require("../services/syncService");
 const { logger } = require("../../utils/logger");
 const GithubService = require("../services/githubService");
-const { githubEvents, githubActions } = require("../../constants");
+const { githubEvents, githubActions, GITHUB_STATUS_CLOSED } = require("../../constants");
 const PlaneService = require("../services/planeService");
+const IssueSyncService = require("../services/syncService");
+const { addSyncJobToQueue } = require("../config/queue");
 
 const githubService = new GithubService()
 const planeService = new PlaneService()
+const syncService = new IssueSyncService()
 
 class SyncController {
 
     async startSync(req, res, next) {
         try {
-            const resp = await syncService.startSyncJob()
-            res.status(200).send(resp)
+            const isInProgress = await syncService.isJobAlreadyInProgress();
+            if (isInProgress) {
+                res.status(200).send({ message: "Sync already in progress" });
+                return
+            }
+            // push in bull queue
+            const jobId = new Date().getTime().toString()
+            await addSyncJobToQueue(jobId)
+            const syncjob = await syncService.createSyncJob(jobId)
+            res.status(200).send({ message: "Sync started and queued", body: syncjob });
         } catch (error) {
             next(error)
         }
@@ -33,11 +43,12 @@ class SyncController {
             res.status(202).send('Accepted');
 
             // verify signature
-            const header = req.headers['X-Hub-Signature-256']
+            const header = req.headers['x-hub-signature-256']
             const verification = githubService.verifySignature(header, req.body)
 
             // only verified signature is processed
             if (verification) {
+                logger.info("githubWebhook verified")
                 const githubEvent = req.headers['x-github-event'];
                 const data = req.body;
                 const action = data.action;
@@ -45,8 +56,9 @@ class SyncController {
                 switch (githubEvent) {
                     case githubEvents.ISSUES:
                         if (action === githubActions.CLOSED) {
-                            logger.log(`An issue was closed by ${data.issue.number}`);
-                            planeService.updateIssueState({})
+                            const { id: githubIssueId, state } = data.issue || {};
+                            logger.log(`An issue was closed by ${data.issue.number}, ${githubIssueId}`);
+                            await planeService.updateIssueState({ githubIssueId, state: GITHUB_STATUS_CLOSED })
                         } else {
                             logger.log(`Unhandled action for the issue event: ${action}`);
                         }

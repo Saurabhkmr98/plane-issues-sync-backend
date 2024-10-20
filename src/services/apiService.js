@@ -37,7 +37,16 @@ class APIService {
         try {
             return this.apiMethod({ method: "post", requestURL, requestBody });
         } catch (error) {
-            logger.error(`Error in API getMethod call: ${error.message}`);
+            logger.error(`Error in API postMethod call: ${error.message}`);
+            throw error;
+        }
+    }
+
+    async patchMethod({ requestURL, requestBody }) {
+        try {
+            return this.apiMethod({ method: "patch", requestURL, requestBody });
+        } catch (error) {
+            logger.error(`Error in API patchMethod call: ${error.message}`);
             throw error;
         }
     }

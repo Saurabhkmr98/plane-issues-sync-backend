@@ -1,4 +1,4 @@
-const { GITHUB_OWNER, GITHUB_REPOSITORY } = require("../../config");
+const { GITHUB_OWNER, GITHUB_REPOSITORY, GITHUB_WEBHOOK_SECRET } = require("../../config");
 const { logger } = require("../../utils/logger");
 const { githubAPIService } = require("./apiService");
 
@@ -21,7 +21,7 @@ class GithubService {
             ["sign", "verify"],
         );
 
-        let sigBytes = hexToBytes(sigHex);
+        let sigBytes = this.hexToBytes(sigHex);
         let dataBytes = encoder.encode(payload);
         let equal = await crypto.subtle.verify(
             algorithm.name,

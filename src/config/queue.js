@@ -1,6 +1,8 @@
 const Bull = require('bull');
+const { STATUS_FAILED, STATUS_INPROGRESS, STATUS_QUEUED } = require('../../constants');
 const { logger } = require('../../utils/logger');
-
+const IssueSyncService = require('../services/syncService');
+const { broadcastSyncProgress } = require('./socket');
 
 const redisConfig = {
     host: process.env.REDIS_HOST || '127.0.0.1',
@@ -17,7 +19,9 @@ syncQueue.process(async (job, done) => {
     const { jobId } = job.data;
     try {
         // Call the syncIssues service and pass necessary data
-        const syncService = require('../services/syncService');
+        const syncService = new IssueSyncService();
+        logger.debug(`processing job ${jobId}`)
+        broadcastSyncProgress(jobId, 0, STATUS_INPROGRESS)
         await syncService.startSync(jobId);
         // Mark the job as done once the sync is complete
         done();
@@ -30,6 +34,8 @@ syncQueue.process(async (job, done) => {
 // Error handling
 syncQueue.on('failed', (job, err) => {
     logger.error(`Job ${job.id} failed with error ${err.message}`);
+    const { jobId } = job.data;
+    broadcastSyncProgress(jobId, 100, STATUS_FAILED)
 });
 
 // Progress tracking (optional)
@@ -38,10 +44,12 @@ syncQueue.on('progress', (job, progress) => {
 });
 
 const addSyncJobToQueue = async (jobId) => {
-    logger.info("Adding job to queue", { jobId })
-    return await syncQueue.add({
+    logger.info(`Adding job to queue ${jobId}`, jobId)
+    const resp = await syncQueue.add({
         jobId,
     });
+    broadcastSyncProgress(jobId, 0, STATUS_QUEUED)
+    return resp
 };
 
 module.exports = { syncQueue, addSyncJobToQueue };

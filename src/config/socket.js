@@ -1,3 +1,5 @@
+const { logger } = require('../../utils/logger');
+
 // socket.js
 let io;
 
@@ -23,6 +25,7 @@ const initializeSocket = (server) => {
 };
 
 const broadcastSyncProgress = (jobId, progress, message) => {
+    logger.debug(`Broadcasting sync progress`, jobId, progress, message)
     if (io) {
         io.emit('syncProgress', { jobId, progress, message });
     }

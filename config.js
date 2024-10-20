@@ -10,4 +10,5 @@ module.exports = {
     PLANE_API_KEY: process.env.PLANE_API_KEY,
     PLANE_WORKSPACE_SLUG: process.env.PLANE_WORKSPACE_SLUG,
     PLANE_PROJECT_ID: process.env.PLANE_PROJECT_ID,
+    PLANE_COMPLETED_STATE_ID: process.env.PLANE_COMPLETED_STATE_ID
 };
