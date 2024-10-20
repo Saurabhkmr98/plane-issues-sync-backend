@@ -24,7 +24,6 @@ This project is a robust backend service that synchronizes issues between Plane 
 - **Status Tracking API:** Allows users to check the real-time status of sync jobs.
 - **Modular Architecture:** Follows SOLID principles and best practices in code structure.
 - **Security:** Environment variables for API tokens and keys are securely handled.
-- **Rate Limiting Considerations:** Ensures that GitHub's rate-limiting constraints are respected during sync operations.
 
 ---
 
@@ -182,7 +181,7 @@ Feel free to reach out for further details or to contribute to the project.
 
 ### Author
 
-[Saurabh Kumar]  
-[saurabhkmr0241@gmail.com]
+Saurabh Kumar  
+saurabhkmr0241@gmail.com
 
 ---
