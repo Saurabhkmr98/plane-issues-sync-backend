@@ -40,9 +40,38 @@ The system consists of several key components:
 ## Database Schema Explanation
 
 This service has two collections, `sync_jobs` and `project_issues` for complete flow.
+
 `sync_jobs` stores data for sync job and current status of job which helps in preventing duplicate job creation and finding current status of sync job.
 
+`sync_jobs`
+
+```javascript
+{
+    jobId: { type: String },
+    status: { type: String, enum: ALL_JOB_STATUS, required: true },
+    progress: { type: Number, default: 0 },
+    githubRepo: { type: String, required: true },
+    planeWorkspace: { type: String, required: true },
+    errorMessage: { type: String, default: '' },
+    startedAt: { type: Date },
+    completedAt: { type: Date },
+}
+```
+
 `project_issues` stores relation between plane issues and github issues for a plane project. It helps in preventing duplicate creation of issues in plane project while syncing and helps github webhook to fetch planeIssueId for a githubIssue and mark it as completed whenever github issue is closed.
+
+`project_issues`
+
+```javascript
+{
+    projectId: {type: String},
+    issues: [{
+      issueId: {type: String},
+      githubIssueId: {type: String},
+      status: {type: String}
+    }]
+}
+```
 
 ### Flow Overview:
 
