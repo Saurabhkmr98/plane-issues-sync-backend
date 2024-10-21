@@ -48,11 +48,11 @@ This service has two collections, `sync_jobs` and `project_issues` for complete 
 ```javascript
 {
     jobId: { type: String },
-    status: { type: String, required: true },
-    progress: { type: Number, default: 0 },
-    githubRepo: { type: String, required: true },
-    planeWorkspace: { type: String, required: true },
-    errorMessage: { type: String, default: '' },
+    status: { type: String },
+    progress: { type: Number },
+    githubRepo: { type: String },
+    planeWorkspace: { type: String },
+    errorMessage: { type: String },
     startedAt: { type: Date },
     completedAt: { type: Date },
 }
