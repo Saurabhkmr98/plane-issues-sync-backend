@@ -37,6 +37,13 @@ The system consists of several key components:
 4. **MongoDB**: Stores ongoing and past sync job statuses for tracking and analytics.
 5. **Sync Logic**: Core logic for fetching issues from GitHub and creating corresponding issues in Plane.
 
+## Database Schema Explanation
+
+This service has two collections, `sync_jobs` and `project_issues` for complete flow.
+`sync_jobs` stores data for sync job and current status of job which helps in preventing duplicate job creation and finding current status of sync job.
+
+`project_issues` stores relation between plane issues and github issues for a plane project. It helps in preventing duplicate creation of issues in plane project while syncing and helps github webhook to fetch planeIssueId for a githubIssue and mark it as completed whenever github issue is closed.
+
 ### Flow Overview:
 
 1. The user makes a request to start an issue sync job.
