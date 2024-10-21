@@ -81,6 +81,7 @@ This service has two collections, `sync_jobs` and `project_issues` for complete 
 3. Sync progress is broadcast in real-time using **Socket.IO**.
 4. The system prevents duplicate issues during the sync process.
 5. Users can check the sync job's status via a dedicated **API**.
+6. Whenever an issue is closed on github it marks it as completed in **Plane** and updates status in DB
 
 ---
 
