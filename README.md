@@ -48,7 +48,7 @@ This service has two collections, `sync_jobs` and `project_issues` for complete 
 ```javascript
 {
     jobId: { type: String },
-    status: { type: String, enum: ALL_JOB_STATUS, required: true },
+    status: { type: String, required: true },
     progress: { type: Number, default: 0 },
     githubRepo: { type: String, required: true },
     planeWorkspace: { type: String, required: true },
