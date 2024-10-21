@@ -6,6 +6,7 @@ This project is a robust backend service that synchronizes issues between Plane 
 
 - [Features](#features)
 - [Architecture Overview](#architecture-overview)
+- [Database Schema Explanation](#database-schema-explanation)
 - [API Documentation](#api-documentation)
   - [Start Sync Job](#start-sync-job)
   - [Check Sync Job Status](#check-sync-job-status)
