@@ -3,7 +3,6 @@
 This project is a robust backend service that synchronizes issues between Plane and GitHub. It provides an API that allows users to sync issues from GitHub into Plane workspaces, with background processing, real-time status tracking using WebSockets, and a modular architecture for scalability and maintainability.
 
 ## Table of Contents
-
 - [Features](#features)
 - [Architecture Overview](#architecture-overview)
 - [Database Schema Explanation](#database-schema-explanation)
